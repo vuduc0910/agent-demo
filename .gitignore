@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+.claude
+.agents
+.windsurf
+.env
+src/generated
+*.tsbuildinfo
+video/
+scripts
+generated

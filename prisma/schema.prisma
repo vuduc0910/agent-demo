@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RiskLevel {
+  normal
+  high
+}
+
+enum OrderStatus {
+  pending
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+enum PaymentStatus {
+  pending
+  captured
+  partially_refunded
+  refunded
+  failed
+}
+
+enum SubscriptionStatus {
+  active
+  paused
+  cancelled
+}
+
+enum TicketStatus {
+  open
+  pending
+  resolved
+}
+
+enum AgentRunStatus {
+  running
+  awaiting_approval
+  completed
+  needs_info
+  blocked
+  rejected
+  failed
+}
+
+enum ActionStatus {
+  authorized
+  pending_approval
+  approved
+  rejected
+  denied
+  executed
+  failed
+}
+
+enum ApprovalStatus {
+  pending
+  approved
+  rejected
+}
+
+model Customer {
+  id            String         @id
+  name          String
+  email         String         @unique
+  riskLevel     RiskLevel      @default(normal) @map("risk_level")
+  orders        Order[]
+  subscriptions Subscription[]
+
+  @@map("customers")
+}
+
+model Order {
+  id              String      @id
+  customerId      String      @map("customer_id")
+  status          OrderStatus
+  total           Decimal     @db.Decimal(10, 2)
+  currency        String      @db.Char(3)
+  trackingNumber  String?     @map("tracking_number")
+  carrier         String?
+  shippingAddress String      @map("shipping_address")
+  createdAt       DateTime    @map("created_at")
+  deliveredAt     DateTime?   @map("delivered_at")
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  items           OrderItem[]
+  payments        Payment[]
+
+  @@index([customerId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id
+  orderId   String  @map("order_id")
+  sku       String
+  name      String
+  quantity  Int
+  unitPrice Decimal @map("unit_price") @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Payment {
+  id             String        @id
+  orderId        String?       @map("order_id")
+  subscriptionId String?       @map("subscription_id")
+  amount         Decimal       @db.Decimal(10, 2)
+  currency       String        @db.Char(3)
+  status         PaymentStatus
+  capturedAt     DateTime?     @map("captured_at")
+  refundedAt     DateTime?     @map("refunded_at")
+  refundedAmount Decimal?      @map("refunded_amount") @db.Decimal(10, 2)
+  order          Order?        @relation(fields: [orderId], references: [id])
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@index([orderId])
+  @@index([subscriptionId])
+  @@map("payments")
+}
+
+model Subscription {
+  id                 String             @id
+  customerId         String             @map("customer_id")
+  plan               String
+  status             SubscriptionStatus
+  price              Decimal            @db.Decimal(10, 2)
+  currency           String             @db.Char(3)
+  currentPeriodStart DateTime           @map("current_period_start")
+  currentPeriodEnd   DateTime           @map("current_period_end")
+  cancelAtPeriodEnd  Boolean            @default(false) @map("cancel_at_period_end")
+  cancelledAt        DateTime?          @map("cancelled_at")
+  customer           Customer           @relation(fields: [customerId], references: [id])
+  payments           Payment[]
+
+  @@index([customerId])
+  @@map("subscriptions")
+}
+
+model SupportTicket {
+  id         String          @id
+  customerId String?         @map("customer_id")
+  subject    String
+  message    String
+  status     TicketStatus    @default(open)
+  tags       String[]        @default([])
+  createdAt  DateTime        @map("created_at")
+  messages   TicketMessage[]
+
+  @@map("support_tickets")
+}
+
+enum MessageAuthor {
+  customer
+  agent
+}
+
+model TicketMessage {
+  id         Int           @id @default(autoincrement())
+  ticketId   String        @map("ticket_id")
+  author     MessageAuthor
+  body       String
+  agentRunId String?       @map("agent_run_id")
+  createdAt  DateTime      @default(now()) @map("created_at")
+  ticket     SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId, id])
+  @@map("ticket_messages")
+}
+
+model AgentRun {
+  id          String            @id @default(uuid())
+  ticketId    String            @map("ticket_id")
+  status      AgentRunStatus    @default(running)
+  startedAt   DateTime          @default(now()) @map("started_at")
+  completedAt DateTime?         @map("completed_at")
+  error       String?
+  actions     AgentAction[]
+  approvals   ApprovalRequest[]
+  auditLogs   AuditLog[]
+
+  @@index([ticketId])
+  @@map("agent_runs")
+}
+
+model AgentAction {
+  id         String           @id @default(uuid())
+  agentRunId String           @map("agent_run_id")
+  actionType String           @map("action_type")
+  riskLevel  String           @map("risk_level")
+  status     ActionStatus
+  payload    Json
+  result     Json?
+  createdAt  DateTime         @default(now()) @map("created_at")
+  agentRun   AgentRun         @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+  approval   ApprovalRequest?
+
+  @@index([agentRunId])
+  @@map("agent_actions")
+}
+
+model ApprovalRequest {
+  id         String         @id @default(uuid())
+  agentRunId String         @map("agent_run_id")
+  actionId   String         @unique @map("action_id")
+  status     ApprovalStatus @default(pending)
+  approvedBy String?        @map("approved_by")
+  approvedAt DateTime?      @map("approved_at")
+  reason     String?
+  createdAt  DateTime       @default(now()) @map("created_at")
+  agentRun   AgentRun       @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+  action     AgentAction    @relation(fields: [actionId], references: [id], onDelete: Cascade)
+
+  @@index([agentRunId])
+  @@map("approval_requests")
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  agentRunId String   @map("agent_run_id")
+  event      String
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+  agentRun   AgentRun @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+
+  @@index([agentRunId])
+  @@map("audit_logs")
+}

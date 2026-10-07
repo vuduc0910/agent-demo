@@ -1,0 +1,11 @@
+[
+  { "id": "item_001", "order_id": "ord_1001", "sku": "COF-ETH-1KG", "name": "Ethiopia Yirgacheffe Beans 1kg", "quantity": 1, "unit_price": 89 },
+  { "id": "item_002", "order_id": "ord_1002", "sku": "MUG-CER-2", "name": "Ceramic Mug (2-pack)", "quantity": 1, "unit_price": 54 },
+  { "id": "item_003", "order_id": "ord_1003", "sku": "KET-GOOSE", "name": "Gooseneck Kettle", "quantity": 1, "unit_price": 120 },
+  { "id": "item_004", "order_id": "ord_1004", "sku": "FLT-PAPER-100", "name": "Paper Filters (100)", "quantity": 3, "unit_price": 14 },
+  { "id": "item_005", "order_id": "ord_1005", "sku": "HOOD-BLU-M", "name": "Logo Hoodie Blue / M", "quantity": 1, "unit_price": 65 },
+  { "id": "item_006", "order_id": "ord_1006", "sku": "GRN-BURR-PRO", "name": "Burr Grinder Pro", "quantity": 1, "unit_price": 150 },
+  { "id": "item_007", "order_id": "ord_1007", "sku": "COF-COL-500", "name": "Colombia Huila Beans 500g", "quantity": 3, "unit_price": 25 },
+  { "id": "item_008", "order_id": "ord_1008", "sku": "GRN-HAND", "name": "Hand Grinder", "quantity": 1, "unit_price": 30 },
+  { "id": "item_009", "order_id": "ord_1009", "sku": "COF-KEN-500", "name": "Kenya AA Beans 500g", "quantity": 2, "unit_price": 30 }
+]

@@ -1,0 +1,18 @@
+[
+  {"id": "pay_001", "order_id": "ord_1001", "subscription_id": null, "amount": 89, "currency": "USD", "status": "captured", "captured_at": "2026-09-28T09:00:05Z", "refunded_at": null},
+  {"id": "pay_002", "order_id": "ord_1001", "subscription_id": null, "amount": 89, "currency": "USD", "status": "captured", "captured_at": "2026-09-28T09:00:41Z", "refunded_at": null},
+  {"id": "pay_003", "order_id": "ord_1002", "subscription_id": null, "amount": 54, "currency": "USD", "status": "captured", "captured_at": "2026-10-01T15:20:04Z", "refunded_at": null},
+  {"id": "pay_004", "order_id": "ord_1003", "subscription_id": null, "amount": 120, "currency": "USD", "status": "captured", "captured_at": "2026-09-20T11:00:03Z", "refunded_at": null},
+  {"id": "pay_005", "order_id": "ord_1003", "subscription_id": null, "amount": 120, "currency": "USD", "status": "refunded", "captured_at": "2026-09-20T11:00:52Z", "refunded_at": "2026-09-21T09:12:00Z"},
+  {"id": "pay_006", "order_id": "ord_1004", "subscription_id": null, "amount": 42, "currency": "USD", "status": "captured", "captured_at": "2026-10-05T08:45:03Z", "refunded_at": null},
+  {"id": "pay_007", "order_id": "ord_1005", "subscription_id": null, "amount": 65, "currency": "USD", "status": "captured", "captured_at": "2026-09-22T13:10:02Z", "refunded_at": null},
+  {"id": "pay_008", "order_id": "ord_1006", "subscription_id": null, "amount": 150, "currency": "USD", "status": "captured", "captured_at": "2026-09-27T10:00:04Z", "refunded_at": null},
+  {"id": "pay_009", "order_id": "ord_1007", "subscription_id": null, "amount": 75, "currency": "USD", "status": "refunded", "captured_at": "2026-09-10T17:30:02Z", "refunded_at": "2026-09-11T10:00:00Z"},
+  {"id": "pay_010", "order_id": "ord_1008", "subscription_id": null, "amount": 30, "currency": "USD", "status": "captured", "captured_at": "2026-09-15T07:00:03Z", "refunded_at": null},
+  {"id": "pay_011", "order_id": null, "subscription_id": "sub_001", "amount": 19, "currency": "USD", "status": "captured", "captured_at": "2026-09-08T07:00:02Z", "refunded_at": null},
+  {"id": "pay_012", "order_id": null, "subscription_id": "sub_002", "amount": 19, "currency": "USD", "status": "captured", "captured_at": "2026-09-15T07:00:02Z", "refunded_at": null},
+  {"id": "pay_013", "order_id": null, "subscription_id": "sub_003", "amount": 29, "currency": "USD", "status": "captured", "captured_at": "2026-09-01T07:00:02Z", "refunded_at": null},
+  {"id": "pay_014", "order_id": null, "subscription_id": "sub_005", "amount": 24, "currency": "USD", "status": "captured", "captured_at": "2026-09-05T07:00:02Z", "refunded_at": null},
+  {"id": "pay_015", "order_id": null, "subscription_id": "sub_005", "amount": 24, "currency": "USD", "status": "captured", "captured_at": "2026-10-05T07:00:02Z", "refunded_at": null},
+  {"id": "pay_016", "order_id": null, "subscription_id": "sub_006", "amount": 19, "currency": "USD", "status": "captured", "captured_at": "2026-09-16T07:00:02Z", "refunded_at": null}
+]

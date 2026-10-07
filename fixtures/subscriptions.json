@@ -1,0 +1,8 @@
+[
+  {"id": "sub_001", "customer_id": "cus_002", "plan": "Coffee Club Monthly", "status": "active", "price": 19, "currency": "USD", "current_period_start": "2026-09-08T07:00:00Z", "current_period_end": "2026-10-08T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": null},
+  {"id": "sub_002", "customer_id": "cus_003", "plan": "Coffee Club Monthly", "status": "active", "price": 19, "currency": "USD", "current_period_start": "2026-09-15T07:00:00Z", "current_period_end": "2026-10-15T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": null},
+  {"id": "sub_003", "customer_id": "cus_003", "plan": "Tea Sampler Quarterly", "status": "active", "price": 29, "currency": "USD", "current_period_start": "2026-09-01T07:00:00Z", "current_period_end": "2026-12-01T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": null},
+  {"id": "sub_004", "customer_id": "cus_001", "plan": "Coffee Club Monthly", "status": "cancelled", "price": 19, "currency": "USD", "current_period_start": "2026-07-01T07:00:00Z", "current_period_end": "2026-08-01T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": "2026-08-01T07:00:00Z"},
+  {"id": "sub_005", "customer_id": "cus_001", "plan": "Espresso Lab Monthly", "status": "active", "price": 24, "currency": "USD", "current_period_start": "2026-10-05T07:00:00Z", "current_period_end": "2026-11-05T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": null},
+  {"id": "sub_006", "customer_id": "cus_005", "plan": "Coffee Club Monthly", "status": "active", "price": 19, "currency": "USD", "current_period_start": "2026-09-16T07:00:00Z", "current_period_end": "2026-10-16T07:00:00Z", "cancel_at_period_end": false, "cancelled_at": null}
+]

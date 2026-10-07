@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1424" viewBox="0 0 960 1424" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#495057"/></marker>
+<marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#868E96"/></marker>
+<style>
+.title{font-size:14.5px;font-weight:700;fill:#1d2330}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.sans{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.sub{font-size:12px;fill:#495057}
+.tag{font-size:10.5px;font-weight:700;fill:#fff}
+.edge{font-size:11.5px;font-weight:700;fill:#495057}
+.h{font-size:17px;font-weight:800;fill:#1d2330}
+.legend{font-size:12px;fill:#343a40}
+</style>
+</defs>
+<rect x="0" y="0" width="960" height="1424" rx="16" fill="#ffffff"/>
+<rect x="24" y="12" width="18" height="14" rx="4" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.5"/>
+<text x="50" y="24" class="legend">Code (deterministic)</text>
+<rect x="324" y="12" width="18" height="14" rx="4" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.5"/>
+<text x="350" y="24" class="legend">LLM (Zod-validated output)</text>
+<rect x="624" y="12" width="18" height="14" rx="4" fill="#FFF1DF" stroke="#E67700" stroke-width="1.5"/>
+<text x="650" y="24" class="legend">Human approval</text>
+<rect x="24" y="32" width="18" height="14" rx="4" fill="#F1F3F5" stroke="#868E96" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="50" y="44" class="legend">Deterministic reply (early exit)</text>
+<rect x="324" y="32" width="18" height="14" rx="4" fill="#FFE3E3" stroke="#C92A2A" stroke-width="1.5"/>
+<text x="350" y="44" class="legend">Denied</text>
+<rect x="624" y="32" width="18" height="14" rx="4" fill="#E6FCF5" stroke="#0CA678" stroke-width="1.5"/>
+<text x="650" y="44" class="legend">Data / external services</text>
+<text x="24" y="72" class="h">System</text>
+<rect x="24" y="88" width="200" height="58" rx="10" fill="#FFFFFF" stroke="#495057" stroke-width="1.6"/>
+<text x="38" y="112" class="title sans">Customer chat</text>
+<text x="38" y="130" class="sub">/chat.html · 30-min session</text>
+<rect x="24" y="162" width="200" height="58" rx="10" fill="#FFFFFF" stroke="#495057" stroke-width="1.6"/>
+<text x="38" y="186" class="title sans">Ops console</text>
+<text x="38" y="204" class="sub">/ · approve · audit timeline</text>
+<rect x="280" y="104" width="220" height="100" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="294" y="128" class="title sans">NestJS 12 API</text>
+<text x="294" y="146" class="sub">Chat · Agent runs · Tickets</text>
+<text x="294" y="161" class="sub">Zod validation · rate limit</text>
+<rect x="556" y="104" width="180" height="100" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="570" y="128" class="title sans">LangGraph agent</text>
+<text x="570" y="146" class="sub">StateGraph · interrupt()</text>
+<text x="570" y="161" class="sub">one run per message</text>
+<rect x="776" y="84" width="160" height="62" rx="10" fill="#E6FCF5" stroke="#0CA678" stroke-width="1.6"/>
+<text x="790" y="108" class="title sans">OpenAI</text>
+<text x="790" y="126" class="sub">strict structured output</text>
+<rect x="776" y="158" width="160" height="76" rx="10" fill="#E6FCF5" stroke="#0CA678" stroke-width="1.6"/>
+<text x="790" y="182" class="title sans">PostgreSQL</text>
+<text x="790" y="200" class="sub">commerce · tickets · audit</text>
+<text x="790" y="215" class="sub">LangGraph checkpoints</text>
+<path d="M224,117 L280,140" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M224,191 L280,172" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M500,154 L556,154" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M736,130 L776,115" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M736,180 L776,196" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<line x1="24" y1="262" x2="936" y2="262" stroke="#dee2e6" stroke-width="1.5"/>
+<text x="24" y="296" class="h">Agent workflow</text>
+<text x="168" y="296" class="sub">one run per customer message · every node writes the audit log</text>
+<rect x="150" y="314" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="338" class="title mono">load_ticket</text>
+<text x="164" y="356" class="sub">ticket + conversation turns</text>
+<rect x="404.6" y="323" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="336" class="tag" text-anchor="middle">code</text>
+<path d="M300.0,378 L300.0,398" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="398" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="422" class="title mono">validate_input</text>
+<text x="164" y="440" class="sub">customer · message length</text>
+<text x="164" y="455" class="sub">order refs · claimed amounts</text>
+<rect x="404.6" y="407" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="420" class="tag" text-anchor="middle">code</text>
+<rect x="520" y="398" width="416" height="64" rx="10" fill="#F1F3F5" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="534" y="422" class="title mono">request_info</text>
+<text x="534" y="440" class="sub">missing or unknown customer · empty · bad order ref</text>
+<text x="534" y="455" class="sub">→ deterministic question, no LLM call</text>
+<rect x="884.0" y="407" width="42.0" height="18" rx="9" fill="#868E96"/>
+<text x="905.0" y="420" class="tag" text-anchor="middle">reply</text>
+<path d="M450,430.0 L520,430.0" fill="none" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-gray)"/>
+<path d="M936,430.0 L948,430.0" stroke="#868E96" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<path d="M300.0,462 L300.0,482" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="482" width="300" height="64" rx="10" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.6"/>
+<text x="164" y="506" class="title mono">security_check</text>
+<text x="164" y="524" class="sub">regex heuristics + LLM classifier</text>
+<rect x="365.0" y="491" width="75.0" height="18" rx="9" fill="#7C3AED"/>
+<text x="402.5" y="504" class="tag" text-anchor="middle">code + LLM</text>
+<rect x="520" y="482" width="416" height="64" rx="10" fill="#F1F3F5" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="534" y="506" class="title mono">security_block</text>
+<text x="534" y="524" class="sub">injection, no genuine request, no order number</text>
+<text x="534" y="539" class="sub">→ “Please send your order number.”</text>
+<rect x="884.0" y="491" width="42.0" height="18" rx="9" fill="#868E96"/>
+<text x="905.0" y="504" class="tag" text-anchor="middle">reply</text>
+<path d="M450,514.0 L520,514.0" fill="none" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-gray)"/>
+<path d="M936,514.0 L948,514.0" stroke="#868E96" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<path d="M300.0,546 L300.0,566" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="566" width="300" height="64" rx="10" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.6"/>
+<text x="164" y="590" class="title mono">classify_issue</text>
+<text x="164" y="608" class="sub">issue type · severity · order ref</text>
+<rect x="411.2" y="575" width="28.799999999999997" height="18" rx="9" fill="#7C3AED"/>
+<text x="425.6" y="588" class="tag" text-anchor="middle">LLM</text>
+<rect x="520" y="566" width="416" height="64" rx="10" fill="#F1F3F5" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="534" y="590" class="title mono">off_topic</text>
+<text x="534" y="608" class="sub">poems, code, homework, other companies…</text>
+<text x="534" y="623" class="sub">→ “I can only help with orders, payments…”</text>
+<rect x="884.0" y="575" width="42.0" height="18" rx="9" fill="#868E96"/>
+<text x="905.0" y="588" class="tag" text-anchor="middle">reply</text>
+<path d="M450,598.0 L520,598.0" fill="none" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-gray)"/>
+<path d="M936,598.0 L948,598.0" stroke="#868E96" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<path d="M300.0,630 L300.0,650" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="650" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="674" class="title mono">retrieve_trusted_data</text>
+<text x="164" y="692" class="sub">orders · payments · subscriptions</text>
+<text x="164" y="707" class="sub">scoped to this customer only</text>
+<rect x="404.6" y="659" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="672" class="tag" text-anchor="middle">code</text>
+<rect x="520" y="650" width="416" height="64" rx="10" fill="#F1F3F5" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="534" y="674" class="title mono">request_info</text>
+<text x="534" y="692" class="sub">order not on account · unclear · amount matches nothing</text>
+<text x="534" y="707" class="sub">→ ask for the order number or details</text>
+<rect x="884.0" y="659" width="42.0" height="18" rx="9" fill="#868E96"/>
+<text x="905.0" y="672" class="tag" text-anchor="middle">reply</text>
+<path d="M450,682.0 L520,682.0" fill="none" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-gray)"/>
+<path d="M936,682.0 L948,682.0" stroke="#868E96" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<path d="M300.0,714 L300.0,734" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="734" width="300" height="64" rx="10" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.6"/>
+<text x="164" y="758" class="title mono">analyze_issue</text>
+<text x="164" y="776" class="sub">verify the claim against DB records</text>
+<rect x="411.2" y="743" width="28.799999999999997" height="18" rx="9" fill="#7C3AED"/>
+<text x="425.6" y="756" class="tag" text-anchor="middle">LLM</text>
+<path d="M300.0,798 L300.0,818" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="818" width="300" height="64" rx="10" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.6"/>
+<text x="164" y="842" class="title mono">propose_action</text>
+<text x="164" y="860" class="sub">one action from a fixed catalog</text>
+<text x="164" y="875" class="sub">IDs only, never amounts</text>
+<rect x="411.2" y="827" width="28.799999999999997" height="18" rx="9" fill="#7C3AED"/>
+<text x="425.6" y="840" class="tag" text-anchor="middle">LLM</text>
+<path d="M300.0,882 L300.0,902" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="902" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="926" class="title mono">policy_engine</text>
+<text x="164" y="944" class="sub">AUTO / APPROVAL / DENY table</text>
+<text x="164" y="959" class="sub">ownership · refund window · flags</text>
+<rect x="404.6" y="911" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="924" class="tag" text-anchor="middle">code</text>
+<rect x="520" y="988" width="210" height="64" rx="10" fill="#FFF1DF" stroke="#E67700" stroke-width="1.6"/>
+<text x="534" y="1012" class="title mono">human_review</text>
+<text x="534" y="1030" class="sub">interrupt() · saved in DB</text>
+<text x="534" y="1045" class="sub">approve / reject in ops</text>
+<rect x="678.0" y="997" width="42.0" height="18" rx="9" fill="#E67700"/>
+<text x="699.0" y="1010" class="tag" text-anchor="middle">human</text>
+<rect x="756" y="988" width="180" height="64" rx="10" fill="#FFE3E3" stroke="#C92A2A" stroke-width="1.6"/>
+<text x="770" y="1012" class="title mono">blocked</text>
+<text x="770" y="1030" class="sub">nothing runs</text>
+<text x="770" y="1045" class="sub">e.g. delete_customer</text>
+<rect x="877.4" y="997" width="48.599999999999994" height="18" rx="9" fill="#C92A2A"/>
+<text x="901.7" y="1010" class="tag" text-anchor="middle">denied</text>
+<path d="M450,922 L846.0,922 L846.0,988" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="776" y="916" class="edge">DENY</text>
+<path d="M450,946 L620,946 L620,988" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="464" y="940" class="edge">REQUIRE_APPROVAL</text>
+<path d="M300.0,966 L300.0,1078" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="308.0" y="1016" class="edge">ALLOW</text>
+<rect x="150" y="1078" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="1102" class="title mono">execute_action</text>
+<text x="164" y="1120" class="sub">mock Stripe · Slack · helpdesk</text>
+<text x="164" y="1135" class="sub">re-checks DB · conditional updates</text>
+<rect x="404.6" y="1087" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="1100" class="tag" text-anchor="middle">code</text>
+<path d="M300.0,1142 L300.0,1162" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="1162" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="1186" class="title mono">verify_execution</text>
+<text x="164" y="1204" class="sub">re-read DB: did it really happen?</text>
+<rect x="404.6" y="1171" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="1184" class="tag" text-anchor="middle">code</text>
+<path d="M300.0,1226 L300.0,1246" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="1246" width="300" height="64" rx="10" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.6"/>
+<text x="164" y="1270" class="title mono">generate_response</text>
+<text x="164" y="1288" class="sub">written from verified facts only</text>
+<text x="164" y="1303" class="sub">+ output guard (code)</text>
+<rect x="411.2" y="1255" width="28.799999999999997" height="18" rx="9" fill="#7C3AED"/>
+<text x="425.6" y="1268" class="tag" text-anchor="middle">LLM</text>
+<path d="M300.0,1310 L300.0,1330" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="150" y="1330" width="300" height="64" rx="10" fill="#E7F0FF" stroke="#3B5BDB" stroke-width="1.6"/>
+<text x="164" y="1354" class="title mono">audit_log → END</text>
+<text x="164" y="1372" class="sub">run status · reply posted to chat</text>
+<text x="164" y="1387" class="sub">timeline in the ops console</text>
+<rect x="404.6" y="1339" width="35.4" height="18" rx="9" fill="#3B5BDB"/>
+<text x="422.3" y="1352" class="tag" text-anchor="middle">code</text>
+<path d="M560,1052 L560,1110 L450,1110" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="568" y="1104" class="edge">approve</text>
+<path d="M670,1052 L670,1268 L450,1268" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="678" y="1216" class="edge">reject</text>
+<path d="M846.0,1052 L846.0,1290 L450,1290" fill="none" stroke="#495057" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M948,430.0 L948,1362.0" stroke="#868E96" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<path d="M948,1362.0 L450,1362.0" fill="none" stroke="#868E96" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-gray)"/>
+<text x="940" y="1354.0" class="sub" text-anchor="end">early exits: deterministic reply → audit_log</text>
+</svg>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Operations Agent</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #fff; --text: #1d2330; --muted: #6b7385; --border: #e3e6ec;
+    --accent: #3b5bdb; --ok: #2b8a3e; --warn: #e67700; --bad: #c92a2a; --info: #1971c2;
+    --chip: #eef1f6; --code: #f1f3f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151b; --panel: #1a1e26; --text: #e6e9ef; --muted: #8e96a8; --border: #2a303c;
+      --accent: #748ffc; --ok: #51cf66; --warn: #ffa94d; --bad: #ff6b6b; --info: #4dabf7;
+      --chip: #242a35; --code: #20252e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); }
+  header { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--panel); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  header h1 { font-size: 18px; margin: 0; }
+  header p { margin: 0; color: var(--muted); }
+  .layout { display: grid; grid-template-columns: 340px 1fr; min-height: calc(100vh - 54px); }
+  aside { border-right: 1px solid var(--border); background: var(--panel); overflow-y: auto; max-height: calc(100vh - 54px); }
+  aside h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 14px 16px 6px; }
+  .ticket { padding: 10px 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .ticket:hover { background: var(--chip); }
+  .ticket.active { background: var(--chip); box-shadow: inset 3px 0 0 var(--accent); }
+  .ticket .row { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .ticket .subject { font-weight: 600; }
+  .ticket .preview { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  main { padding: 20px; overflow-y: auto; max-height: calc(100vh - 54px); }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+  .card h3 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
+  .grid .card { margin-bottom: 0; }
+  .message { white-space: pre-wrap; background: var(--code); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--chip); color: var(--muted); white-space: nowrap; }
+  .badge.ok { color: var(--ok); } .badge.warn { color: var(--warn); } .badge.bad { color: var(--bad); } .badge.info { color: var(--info); }
+  .kv { display: grid; grid-template-columns: 150px 1fr; gap: 4px 12px; }
+  .kv dt { color: var(--muted); } .kv dd { margin: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 500; }
+  button { font: inherit; border: 1px solid var(--border); background: var(--panel); color: var(--text); padding: 7px 14px; border-radius: 8px; cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.danger { color: var(--bad); }
+  button:disabled { opacity: .5; cursor: default; }
+  input { font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); }
+  .approval { border: 2px solid var(--warn); }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+  .muted { color: var(--muted); }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 80px 1fr; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+  .timeline time { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .timeline details summary { cursor: pointer; }
+  pre.meta { margin: 4px 0 0; font-size: 12px; background: var(--code); padding: 6px 8px; border-radius: 6px; white-space: pre-wrap; word-break: break-word; }
+  .empty { color: var(--muted); text-align: center; padding: 60px 0; }
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--muted); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; vertical-align: -2px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    aside, main { max-height: none; }
+    .kv { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Operations Agent</h1>
+  <p>The LLM understands and recommends. Code authorizes and executes.</p>
+  <a href="/chat.html" target="_blank" rel="noopener" style="margin-left:auto">Customer chat ↗</a>
+</header>
+<div class="layout">
+  <aside>
+    <h2>Support inbox</h2>
+    <div id="inbox"></div>
+  </aside>
+  <main id="main"><div class="empty">Select a ticket from the inbox.</div></main>
+</div>
+<script>
+const state = { tickets: [], ticketId: null, run: null, runs: [], poll: null };
+
+function h(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of children.flat()) if (c != null && c !== false) el.append(c instanceof Node ? c : String(c));
+  return el;
+}
+
+async function api(path, init) {
+  const res = await fetch('/api' + path, { headers: { 'content-type': 'application/json' }, ...init });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(Array.isArray(body.message) ? body.message.join(', ') : body.message || res.statusText);
+  return body;
+}
+
+const TONE = {
+  running: 'info', awaiting_approval: 'warn', completed: 'ok', needs_info: 'warn', blocked: 'bad', rejected: 'bad', failed: 'bad',
+  ALLOW: 'ok', REQUIRE_APPROVAL: 'warn', DENY: 'bad', high: 'bad', medium: 'warn', low: 'ok',
+};
+const badge = (text, tone) => h('span', { class: 'badge ' + (tone || TONE[text] || '') }, String(text).replaceAll('_', ' '));
+const money = (n, c) => (c === 'USD' ? '$' : '') + Number(n).toFixed(2) + (c && c !== 'USD' ? ' ' + c : '');
+const pct = (n) => Math.round(n * 100) + '%';
+const time = (iso) => new Date(iso).toLocaleTimeString([], { hour12: false });
+const day = (iso) => (iso ? new Date(iso).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : '—');
+const kv = (pairs) => h('dl', { class: 'kv' }, pairs.filter(Boolean).flatMap(([k, v]) => [h('dt', {}, k), h('dd', {}, v ?? '—')]));
+const card = (title, ...body) => h('section', { class: 'card' }, h('h3', {}, title), ...body);
+
+async function loadTickets() {
+  state.tickets = await api('/tickets');
+  renderInbox();
+}
+
+function renderInbox() {
+  if (!state.tickets.length)
+    return document.getElementById('inbox').replaceChildren(h('p', { class: 'muted', style: 'padding: 0 16px' },
+      'No tickets yet. ', h('a', { href: '/chat.html', target: '_blank', rel: 'noopener' }, 'Open the customer chat'), ' and send a message to create one.'));
+  document.getElementById('inbox').replaceChildren(...state.tickets.map((t) =>
+    h('div', { class: 'ticket' + (t.id === state.ticketId ? ' active' : ''), onclick: () => selectTicket(t.id) },
+      h('div', { class: 'row' }, h('span', { class: 'subject' }, t.subject), t.lastRun ? badge(t.lastRun.status) : badge(t.status, '')),
+      h('div', { class: 'muted' }, `${t.id} · ${t.customerName ?? (t.customerId ? t.customerId + ' (unknown)' : 'no customer')}`),
+      h('div', { class: 'preview' }, t.message.trim() || '(empty message)'))));
+}
+
+async function selectTicket(id) {
+  state.ticketId = id;
+  state.run = null;
+  stopPolling();
+  renderInbox();
+  state.runs = await api('/agent/runs?ticketId=' + encodeURIComponent(id));
+  if (state.runs[0]) await openRun(state.runs[0].id); else render();
+}
+
+async function analyze() {
+  const run = await api('/agent/runs', { method: 'POST', body: JSON.stringify({ ticketId: state.ticketId }) });
+  state.runs = [run, ...state.runs];
+  await openRun(run.id);
+}
+
+async function openRun(id) {
+  stopPolling();
+  state.run = await api('/agent/runs/' + id);
+  render();
+  if (state.run.status === 'running') state.poll = setTimeout(() => openRun(id), 1000);
+  else loadTickets();
+}
+
+function stopPolling() { clearTimeout(state.poll); state.poll = null; }
+
+async function decide(decision) {
+  const reviewer = document.getElementById('reviewer').value;
+  const reason = document.getElementById('reason').value || undefined;
+  try {
+    await api(`/agent/runs/${state.run.id}/approval`, { method: 'POST', body: JSON.stringify({ decision, reviewer, reason }) });
+    await openRun(state.run.id);
+  } catch (e) { alert(e.message); }
+}
+
+function render() {
+  const t = state.tickets.find((x) => x.id === state.ticketId);
+  const main = document.getElementById('main');
+  if (!t) return main.replaceChildren(h('div', { class: 'empty' }, 'Select a ticket from the inbox.'));
+  const busy = state.run?.status === 'running';
+  main.replaceChildren(
+    card('Customer request',
+      kv([['Ticket', `${t.id} · ${t.status}`], ['Customer', t.customerName ?? t.customerId ?? 'missing'], ['Subject', t.subject]]),
+      h('div', { class: 'message' }, t.message || ' '),
+      t.messages?.length ? h('div', {}, t.messages.map((m) =>
+        h('div', { class: 'message' }, h('strong', {}, m.author === 'customer' ? 'Customer: ' : 'Support: '), m.body))) : null,
+      h('div', { class: 'actions' },
+        h('button', { class: 'primary', onclick: analyze, disabled: busy }, busy ? 'Analyzing…' : 'Analyze with AI'),
+        state.runs.length > 1 && h('span', { class: 'muted' }, 'Runs:'),
+        state.runs.length > 1 && state.runs.map((r, i) => h('button', { onclick: () => openRun(r.id), disabled: r.id === state.run?.id }, `#${state.runs.length - i} ${r.status.replaceAll('_', ' ')}`)))),
+    state.run ? renderRun(state.run) : h('div', { class: 'empty' }, 'No agent runs for this ticket yet.'));
+}
+
+function renderRun(run) {
+  const s = run.state || {};
+  const action = run.actions.at(-1);
+  const ctx = s.context;
+  return h('div', {},
+    card('Agent run',
+      h('div', { class: 'actions' }, badge(run.status), run.status === 'running' && h('span', { class: 'spinner' }),
+        h('span', { class: 'muted' }, run.id), run.next?.length ? h('span', { class: 'muted' }, 'next: ' + run.next.join(', ')) : null),
+      run.error && h('div', { class: 'message' }, 'Error: ' + run.error)),
+    s.validation && !s.validation.valid && card('Input validation',
+      h('ul', {}, s.validation.errors.map((e) => h('li', {}, badge(e.code, 'bad'), ' ', e.message)))),
+    h('div', { class: 'grid' },
+      s.security && card('Security check',
+        kv([['Prompt injection', s.security.prompt_injection_detected ? badge('detected', 'bad') : badge('not detected', 'ok')],
+            ['Risk', badge(s.security.risk)],
+            ['Patterns', s.security.patterns.length ? s.security.patterns.join(', ') : 'none'],
+            ['Heuristics', s.security.heuristic_patterns.join(', ') || 'none'],
+            ['Genuine request', s.security.genuine_support_request ? badge('yes', 'ok') : badge('no', s.security.prompt_injection_detected ? 'bad' : '')],
+            ['LLM classifier', s.security.llm_explanation]])),
+      s.issue && card('AI analysis',
+        kv([['Issue', h('strong', {}, s.issue.issue_type.replaceAll('_', ' '))], ['Category', s.issue.category],
+            ['Severity', badge(s.issue.severity)], ['Confidence', pct(s.issue.confidence)],
+            ['Order reference', s.issue.order_reference ? '#' + s.issue.order_reference : 'none'],
+            ['Intent', s.issue.customer_intent],
+            s.analysis && ['Verified?', s.analysis.issue_confirmed ? badge('confirmed', 'ok') : badge('not confirmed', 'warn')],
+            s.analysis && ['Finding', s.analysis.finding],
+            s.analysis && ['Resolution', s.analysis.recommended_resolution]]))),
+    ctx && card('Verified evidence (trusted database)',
+      ctx.orders.length ? table(['Order', 'Status', 'Total', 'Carrier / tracking', 'Address'],
+        ctx.orders.map((o) => [o.id, o.status, money(o.total, o.currency), [o.carrier, o.trackingNumber].filter(Boolean).join(' ') || '—', o.shippingAddress])) : h('p', { class: 'muted' }, 'No matching orders.'),
+      ctx.payments.length ? table(['Payment', 'Order', 'Amount', 'Status'],
+        ctx.payments.map((p) => [p.id, p.orderId, money(p.amount, p.currency), p.status])) : null,
+      ctx.subscriptions.length ? table(['Subscription', 'Plan', 'Price', 'Status', 'Period ends', 'Auto-renew', 'Latest charge', 'Renewal refundable'],
+        ctx.subscriptions.map((x) => [x.id, x.plan, money(x.price, x.currency), x.status, day(x.currentPeriodEnd),
+          x.nextRenewalAt ? badge('on', 'info') : badge('off', ''),
+          x.latestCharge ? `${x.latestCharge.paymentId} · ${money(x.latestCharge.amount, x.latestCharge.currency)} · ${x.latestCharge.status} · ${day(x.latestCharge.capturedAt)}` : '—',
+          x.proratedRefundPreview
+            ? h('span', {}, badge('yes', 'ok'), ` ≈ ${money(x.proratedRefundPreview.amount, x.currency)} (${x.proratedRefundPreview.usedDays}/${x.proratedRefundPreview.totalDays} days used)`)
+            : badge('no', '')])) : null),
+    s.proposedAction && card('Recommended action',
+      kv([['Action', h('strong', {}, s.proposedAction.action.replaceAll('_', ' '))], ['Target', s.proposedAction.target_id],
+          s.proposedAction.new_shipping_address && ['New address', s.proposedAction.new_shipping_address],
+          s.proposedAction.tag && ['Tag', s.proposedAction.tag],
+          s.proposedAction.notification_message && ['Notification', s.proposedAction.notification_message],
+          ['Reason (LLM)', s.proposedAction.reason],
+          s.policyDecision && ['Policy decision', h('span', {}, badge(s.policyDecision.decision), ' ', s.policyDecision.reason)],
+          s.policyDecision?.flags.length && ['Flags', s.policyDecision.flags.map((f) => badge(f, 'bad'))]])),
+    run.status === 'awaiting_approval' && action?.approval?.status === 'pending' && renderApproval(s, action),
+    (s.executionResult || action?.approval?.status && action.approval.status !== 'pending') && card('Execution',
+      kv([action?.approval && action.approval.status !== 'pending' && ['Human review', h('span', {}, badge(action.approval.status, action.approval.status === 'approved' ? 'ok' : 'bad'), ` by ${action.approval.approvedBy}`, action.approval.reason ? ` — ${action.approval.reason}` : '')],
+          s.executionResult && ['Result', s.executionResult.success ? badge('success (simulated)', 'ok') : badge(s.executionResult.error, 'bad')],
+          s.executionResult?.totalDays != null
+            ? ['Refunded (prorated)', `${money(s.executionResult.amount, s.executionResult.currency)} of ${money(s.executionResult.chargedAmount, s.executionResult.currency)} · used ${s.executionResult.usedDays}/${s.executionResult.totalDays} days`]
+            : s.executionResult?.amount != null && ['Amount (from DB)', money(s.executionResult.amount, s.executionResult.currency)],
+          s.verification && ['Verification', h('span', {}, s.verification.verified ? badge('verified', 'ok') : badge('not verified', 'bad'), ' ', s.verification.reason)]]),
+      s.executionResult && h('details', {}, h('summary', { class: 'muted' }, 'Raw execution result'), h('pre', { class: 'meta' }, JSON.stringify(s.executionResult, null, 2)))),
+    s.customerResponse && card('Customer response', h('div', { class: 'message' }, s.customerResponse)),
+    card('Agent timeline (audit log)',
+      h('ul', { class: 'timeline' }, run.auditLogs.map((l) => h('li', {},
+        h('time', {}, time(l.createdAt)),
+        l.metadata && Object.keys(l.metadata).length
+          ? h('details', {}, h('summary', {}, l.event), h('pre', { class: 'meta' }, JSON.stringify(l.metadata, null, 2)))
+          : h('span', {}, l.event))))));
+}
+
+function renderApproval(s, action) {
+  const target = s.context?.payments.find((p) => p.id === s.proposedAction.target_id);
+  const sub = s.context?.subscriptions.find((x) => x.id === s.proposedAction.target_id);
+  const effect = {
+    cancel_subscription: sub && `Stop auto-renewal. Access continues until ${day(sub.currentPeriodEnd)}. No refund.`,
+    cancel_subscription_with_refund: sub && (sub.proratedRefundPreview
+      ? `Cancel immediately and refund the unused days: ≈ ${money(sub.proratedRefundPreview.amount, sub.currency)} of ${money(sub.latestCharge.amount, sub.currency)} charged ${day(sub.latestCharge.capturedAt)} (${sub.proratedRefundPreview.usedDays}/${sub.proratedRefundPreview.totalDays} days used). The final amount is recomputed at execution.`
+      : 'Cancel immediately. The latest charge is not refundable, so execution will be blocked.'),
+  }[s.proposedAction.action];
+  return h('section', { class: 'card approval' },
+    h('h3', {}, 'Approval required'),
+    kv([['Issue', s.issue?.issue_type.replaceAll('_', ' ')],
+        ['Proposed action', `${s.proposedAction.action.replaceAll('_', ' ')} ${s.proposedAction.target_id ?? ''}`],
+        target && ['Verified amount', `${money(target.amount, target.currency)} (${target.status})`],
+        sub && ['Subscription', `${sub.plan} · ${sub.status} · period ends ${day(sub.currentPeriodEnd)}`],
+        effect && ['Effect', effect],
+        ['Reason', s.proposedAction.reason], ['Policy', s.policyDecision?.reason],
+        s.policyDecision?.flags.length && ['Flags', s.policyDecision.flags.map((f) => badge(f, 'bad'))]]),
+    h('div', { class: 'actions' },
+      h('input', { id: 'reviewer', value: 'admin', placeholder: 'Reviewer', 'aria-label': 'Reviewer' }),
+      h('input', { id: 'reason', placeholder: 'Reason (optional)', 'aria-label': 'Reason' }),
+      h('button', { class: 'danger', onclick: () => decide('reject') }, 'Reject'),
+      h('button', { class: 'primary', onclick: () => decide('approve') }, 'Approve')));
+}
+
+function table(head, rows) {
+  return h('table', {}, h('thead', {}, h('tr', {}, head.map((c) => h('th', {}, c)))),
+    h('tbody', {}, rows.map((r) => h('tr', {}, r.map((c) => h('td', {}, c))))));
+}
+
+const initialTicket = new URLSearchParams(location.search).get('ticket');
+setInterval(() => loadTickets().catch(() => {}), 5000);
+loadTickets().then(() => initialTicket && selectTicket(initialTicket)).catch((e) => { document.getElementById('main').replaceChildren(h('div', { class: 'empty' }, 'Failed to load tickets: ' + e.message)); });
+</script>
+</body>
+</html>

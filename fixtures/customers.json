@@ -1,0 +1,7 @@
+[
+  {"id": "cus_001", "name": "John Doe", "email": "john@example.com", "risk_level": "normal"},
+  {"id": "cus_002", "name": "Maria Garcia", "email": "maria@example.com", "risk_level": "normal"},
+  {"id": "cus_003", "name": "Liam Chen", "email": "liam@example.com", "risk_level": "normal"},
+  {"id": "cus_004", "name": "Aisha Khan", "email": "aisha@example.com", "risk_level": "high"},
+  {"id": "cus_005", "name": "Emma Wilson", "email": "emma@example.com", "risk_level": "normal"}
+]
